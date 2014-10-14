@@ -31,7 +31,7 @@ function curriedSum(numArgs) {
   var numbers = [];
 
   function _curriedSum(n) {
-    numbers.push(n)
+    numbers.push(n);
     if (numbers.length === numArgs) {
       return sumArray(numbers);
     } else {
@@ -41,7 +41,20 @@ function curriedSum(numArgs) {
   return _curriedSum;
 
 };
-var f1 = curriedSum(4)(2)(50)(7)(3);
 
-console.log(f1)
+Function.prototype.curry = function(numArgs){
+  var params = [];
+  var funct = this;
+  function _curried(item) {
+    params.push(item);
+    if (params.length === numArgs) {
+      return funct.apply(this,params);
+    }
+    else{
+      return _curried;
+    }
+  };
+  return _curried;
+}
 
+console.log(sum.curry(3)(1));
